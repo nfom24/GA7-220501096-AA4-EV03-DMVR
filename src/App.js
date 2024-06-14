@@ -1,25 +1,37 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import EquipmentForm from './components/EquipmentForm';
+import EquipmentList from './components/EquipmentList';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [equipments, setEquipments] = useState([]);
+
+  const addEquipment = (equipment) => {
+    setEquipments([...equipments, equipment]);
+  };
+
+  const updateEquipment = (updatedEquipment) => {
+    setEquipments(equipments.map(equip => equip.id === updatedEquipment.id ? updatedEquipment : equip));
+  };
+
+  const deleteEquipment = (id) => {
+    setEquipments(equipments.filter(equip => equip.id !== id));
+  };
+
   return (
+     
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Bienvenido a SOLILO INVENTORY</h1>
+      <p><strong>En este formulario podras agregar un nuevo equipo a tu inventario</strong></p>
+      <EquipmentForm addEquipment={addEquipment} />
+      <EquipmentList
+        equipments={equipments}
+        updateEquipment={updateEquipment}
+        deleteEquipment={deleteEquipment}
+      />
     </div>
   );
-}
+};
 
 export default App;
+
